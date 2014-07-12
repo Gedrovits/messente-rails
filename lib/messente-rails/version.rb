@@ -1,5 +1,3 @@
-module Messente
-  module Rails
-    VERSION = '0.0.1'
-  end
+module MessenteRails
+  VERSION = '0.0.1'
 end

@@ -1,7 +1,7 @@
+require 'messente-rails/messente'
 require 'messente-rails/version'
+require 'messente-rails/configuration'
 
-module Messente
-  module Rails
-    # Your code goes here...
-  end
+module MessenteRails
+  extend Configuration
 end
