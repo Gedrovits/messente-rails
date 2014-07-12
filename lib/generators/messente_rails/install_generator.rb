@@ -5,7 +5,7 @@ module MessenteRails
       desc 'Copies messente.rb into config/initializers directory'
 
       def copy_initializer
-        template 'messente.rb', File.join(Rails.root, 'config', 'initializers', 'messente.rb')
+        template 'messente.rb.erb', File.join(Rails.root, 'config', 'initializers', 'messente.rb')
       end
     end
   end

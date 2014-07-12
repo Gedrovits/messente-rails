@@ -1,6 +1,8 @@
 # Messente::Rails
 
-Messente.com API wrapper for Rails
+Messente.com API wrapper for Rails (non official)
+
+Original API documentation: [https://messente.com/docs/api/rest/](https://messente.com/docs/api/rest/)
 
 ## Installation
 
@@ -18,13 +20,17 @@ Or install it yourself as:
 
 Then you should run install generator:
 
-    $ rails g messente:install
+    $ rails g messente_rails:install
     
-You should restart server after install. You can configure all required in initializers/messente.rb
+You should review the generated file and at least insert your credentials.
+
+NB! Don't forget to restart server after configuration.
 
 ## Usage
 
-TODO: Write usage instructions here
+Methods from original documentation as is, but only synchronous sending is supported for now.
+
+Original API documentation: [https://messente.com/docs/api/rest/](https://messente.com/docs/api/rest/)
 
 ## Contributing
 
