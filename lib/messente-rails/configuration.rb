@@ -13,5 +13,8 @@ module MessenteRails
     mattr_accessor :password
     @@password = nil
 
+    mattr_accessor :response_as_is
+    @@response_as_is = true
+
   end
 end
