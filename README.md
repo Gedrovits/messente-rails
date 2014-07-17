@@ -33,9 +33,27 @@ NB! Don't forget to restart server after configuration.
 
 ## Usage
 
-Methods from original documentation as is, but only synchronous sending is supported for now.
-
 Original API documentation: [https://messente.com/docs/api/rest/](https://messente.com/docs/api/rest/)
+
+Idea was to leave original API names intact, so methods and parameters from API are same in gem.
+
+So for example to send SMS with generated initializer it's simply as that:
+
+    $ messente = Messente.new
+    $ messente.send_sms(text: 'Message', to: '+000000000')
+
+OR alternative way
+
+    $ Messente.send_sms(text: 'Message', to: '+000000000')
+
+This way you can pass in required and optional parameters and use official documentation as manual.
+
+    $ Messente.prices(country: 'GB', format: 'xml')
+    
+NB! Be warned about non-ruby like attribute names and pass them as strings. 
+For now there is only one parameter like this 'dlr-url'. Please if you need it send it like that:
+
+    $ Messente.send_sms(text: 'Message', to: '+000000000', 'dlr-url' => 'http://example.com/callback')
 
 ## Contributing
 

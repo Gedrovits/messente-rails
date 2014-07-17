@@ -6,6 +6,7 @@ require 'messente-rails/version'
 Gem::Specification.new do |spec|
   spec.name          = 'messente-rails'
   spec.version       = MessenteRails::VERSION
+  spec.platform      = Gem::Platform::RUBY
   spec.authors       = ['Vjatseslav Gedrovits']
   spec.email         = ['vjatseslav.gedrovits@gmail.com']
   spec.summary       = %q{Messente.com API wrapper for Rails}

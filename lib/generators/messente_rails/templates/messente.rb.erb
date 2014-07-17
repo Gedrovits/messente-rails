@@ -7,6 +7,8 @@ MessenteRails.configure do |config|
   config.password = <% if ::Rails::VERSION::MAJOR == 4 %>Rails.application.secrets.messente_password<% else %>Rails.env.development? ? 'dev' : 'prod'<% end %>
 
   ## Options
-  # Return Messente.com stringified response as is without any gem parsing
+  # Return Messente.com stringified response as is without any special parsing
   config.response_as_is = true
+  # Should we try backup uri if responsed with failed message
+  config.retry_on_fail = true
 end
