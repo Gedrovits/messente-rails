@@ -16,7 +16,7 @@ class Messente
   ERROR_111  = 'Sender parameter "from" is invalid. You have not activated this sender name from Messente.com'
   FAILED_209 = 'Server failure, try again after a few seconds or try api3.messente.com backup server.'
 
-  attr_accessor :defaults, :credentials, :use_backup_uri
+  attr_accessor :defaults, :credentials, :use_backup_uri, :current_params
 
   def initialize(username = nil, password = nil)
     self.defaults = {
@@ -30,39 +30,47 @@ class Messente
   end
 
   # https://messente.com/docs/api/rest/sms/
+  # :text, :to, :time_to_send, :from, 'dlr-url', :charset, :autoconvert, :udh
   def send_sms(params)
+    self.current_params = params
     response = send_request(params)
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # https://messente.com/docs/api/rest/delivery-request/sync/
+  # :sms_unique_id
   def get_dlr_response(params)
+    self.current_params = params
     response = send_request(params)
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # https://messente.com/docs/api/rest/cancel-sms/
+  # :sms_unique_id
   def cancel_sms(params)
+    self.current_params = params
     response = send_request(params)
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # https://messente.com/docs/api/rest/balance/
   def get_balance
     response = send_request
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # https://messente.com/docs/api/rest/prices/
+  # :country, :format
   def prices(params)
+    self.current_params = params
     response = send_request(params)
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # https://messente.com/docs/api/rest/full-pricelist/
   def pricelist
     response = send_request
-    response_as_is? ? response.smart_response : smart_response(response.smart_response)
+    smart_response(response.parsed_response)
   end
 
   # Methods below allows us to make all calls above as class methods
@@ -85,18 +93,40 @@ class Messente
   def send_request(query = nil)
     action = caller[0].split('`').pop.gsub('\'', '')
     safe_query = query ? credentials.merge(query) : credentials
-    self.class.get("#{ self.class.base_uri.gsub('api2', 'api3') if use_backup_uri === true }/#{ action }/", { query: safe_query })
+    url = if use_backup_uri === true
+            self.use_backup_uri = false
+            "#{ self.class.base_uri.gsub('api2', 'api3') }/#{ action }/"
+          else
+            "/#{ action }/"
+          end
+    self.class.post(url, { query: safe_query })
   end
 
   def smart_response(response)
-    case response.split(' ').first
-    when 'ERROR', 'FAILED' then human_readable_error(response)
-    else response
+    if response_as_is?
+      response
+    else
+      case response.split(' ').first
+      when 'ERROR'
+        [false, human_readable_error(response)]
+      when 'FAILED'
+        if retry_on_fail? && use_backup_uri != false
+          self.use_backup_uri = true
+          method_name = caller[0].split('`').pop.gsub('\'', '').to_sym
+          current_params.blank? ? send(method_name) : send(method_name, current_params)
+        else
+          self.use_backup_uri = nil
+        end
+        [false, human_readable_error(response)]
+      else
+        [true, response]
+      end
     end
   end
 
   def human_readable_error(error)
-    self.class.const_defined?(error) ? self.class.const_get(error) : "#{error} not defined."
+    safe_error = error.gsub(' ', '_')
+    self.class.const_defined?(safe_error) ? self.class.const_get(safe_error) : "#{error} not defined."
   end
 
   def response_as_is?

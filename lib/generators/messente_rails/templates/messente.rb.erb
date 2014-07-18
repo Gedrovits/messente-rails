@@ -1,14 +1,15 @@
 # You can configure messente-rails within this file
 MessenteRails.configure do |config|
   ## Messente.com API credentials
-  #
-  config.username = <% if ::Rails::VERSION::MAJOR == 4 %>Rails.application.secrets.messente_username<% else %>Rails.env.development? ? 'dev' : 'prod'<% end %>
-  #
-  config.password = <% if ::Rails::VERSION::MAJOR == 4 %>Rails.application.secrets.messente_password<% else %>Rails.env.development? ? 'dev' : 'prod'<% end %>
+  # API username
+  config.username = Rails.application.secrets.messente_username
+  # API password
+  config.password = Rails.application.secrets.messente_password
 
   ## Options
   # Return Messente.com stringified response as is without any special parsing
-  config.response_as_is = true
-  # Should we try backup uri if responsed with failed message
+  config.response_as_is = false
+  # Retry with backup Messente.com server on failed response
+  # This works only if :response_as_is === false
   config.retry_on_fail = true
 end
