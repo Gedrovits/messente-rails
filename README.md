@@ -1,7 +1,7 @@
 # messente-rails
 
 Non-official [Messente.com](https://messente.com) SMS gateway API wrapper for Rails.
-Original API documentation: [https://messente.com/docs/api/rest/](https://messente.com/docs/api/rest/)
+Original API documentation: [https://messente.com/documentation/setup-and-activation](https://messente.com/documentation/setup-and-activation)
 
 [![Gem Version](https://badge.fury.io/rb/messente-rails.svg)](http://badge.fury.io/rb/messente-rails)
 [![Build Status](https://travis-ci.org/Gedrovits/messente-rails.svg)](https://travis-ci.org/Gedrovits/messente-rails)
@@ -33,7 +33,7 @@ NB! Don't forget to restart server after configuration.
 
 ## Usage
 
-Original API documentation: [https://messente.com/docs/api/rest/](https://messente.com/docs/api/rest/)
+Original API documentation: [https://messente.com/documentation/setup-and-activation](https://messente.com/documentation/setup-and-activation)
 
 Idea was to leave original API names intact, so methods and parameters from API are same in gem.
 
