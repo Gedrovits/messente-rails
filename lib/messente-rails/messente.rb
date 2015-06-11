@@ -4,7 +4,7 @@ class Messente
   include HTTParty
   base_uri 'api2.messente.com'
 
-  SUPPORTED_METHODS = [:send_sms, :get_dlr_response, :cancel_sms, :get_balance, :prices, :pricelist]
+  SUPPORTED_METHODS = [:send_sms, :get_dlr_response, :get_balance, :prices, :pricelist]
 
   ERROR_101  = 'Access is restricted, wrong credentials. Check username and password values.'
   ERROR_102  = 'Parameters are wrong or missing. Check that all required parameters are present.'
@@ -29,15 +29,15 @@ class Messente
     }
   end
 
-  # https://messente.com/docs/api/rest/sms/
-  # :text, :to, :time_to_send, :from, 'dlr-url', :charset, :autoconvert, :udh
+  # https://messente.com/documentation/sending-sms
+  # :text, :from, :to, :time_to_send, 'dlr-url', :charset, :validity, :autoconvert, :udh
   def send_sms(params)
     self.current_params = params
     response = send_request(params)
     smart_response(response.parsed_response)
   end
 
-  # https://messente.com/docs/api/rest/delivery-request/sync/
+  # https://messente.com/documentation/delivery-report
   # :sms_unique_id
   def get_dlr_response(params)
     self.current_params = params
@@ -45,21 +45,13 @@ class Messente
     smart_response(response.parsed_response)
   end
 
-  # https://messente.com/docs/api/rest/cancel-sms/
-  # :sms_unique_id
-  def cancel_sms(params)
-    self.current_params = params
-    response = send_request(params)
-    smart_response(response.parsed_response)
-  end
-
-  # https://messente.com/docs/api/rest/balance/
+  # https://messente.com/documentation/credits-api
   def get_balance
     response = send_request
     smart_response(response.parsed_response)
   end
 
-  # https://messente.com/docs/api/rest/prices/
+  # https://messente.com/documentation/pricing
   # :country, :format
   def prices(params)
     self.current_params = params
@@ -67,7 +59,7 @@ class Messente
     smart_response(response.parsed_response)
   end
 
-  # https://messente.com/docs/api/rest/full-pricelist/
+  # https://messente.com/documentation/pricing
   def pricelist
     response = send_request
     smart_response(response.parsed_response)
