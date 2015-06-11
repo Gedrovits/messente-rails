@@ -70,7 +70,7 @@ RSpec.describe Messente, type: :model do
     context 'with valid attributes' do
       before(:example) do
         uri = "http://api2.messente.com/prices/?country=EE&password=password&username=username"
-        @expected = {"country":"EE","name":"Estonia","prefix":"372","networks":[{"mccmnc":"24803","name":"Tele2","price":"0.06000"}]}.to_json
+        @expected = '{"country":"EE","name":"Estonia","prefix":"372","networks":[{"mccmnc":"24803","name":"Tele2","price":"0.06000"}]}'
         fake_success(uri, @expected)
         @params = { country: 'EE' }
       end
