@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require 'webmock/rspec'
 
 # Do not perform any external connections

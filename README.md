@@ -4,7 +4,8 @@ Non-official [Messente.com](https://messente.com) SMS gateway API wrapper for Ra
 Original API documentation: [https://messente.com/documentation/setup-and-activation](https://messente.com/documentation/setup-and-activation)
 
 [![Gem Version](https://badge.fury.io/rb/messente-rails.svg)](http://badge.fury.io/rb/messente-rails)
-[![Build Status](https://travis-ci.org/Gedrovits/messente-rails.svg)](https://travis-ci.org/Gedrovits/messente-rails)
+[![Circle CI](https://circleci.com/gh/Gedrovits/messente-rails.svg?style=svg)](https://circleci.com/gh/Gedrovits/messente-rails)
+[![Coverage Status](https://coveralls.io/repos/Gedrovits/messente-rails/badge.svg)](https://coveralls.io/r/Gedrovits/messente-rails)
 [![Dependency Status](https://gemnasium.com/Gedrovits/messente-rails.svg)](https://gemnasium.com/Gedrovits/messente-rails)
 [![Code Climate](https://codeclimate.com/github/Gedrovits/messente-rails.png)](https://codeclimate.com/github/Gedrovits/messente-rails)
 [![Inline docs](http://inch-ci.org/github/Gedrovits/messente-rails.png?branch=master)](http://inch-ci.org/github/Gedrovits/messente-rails)
